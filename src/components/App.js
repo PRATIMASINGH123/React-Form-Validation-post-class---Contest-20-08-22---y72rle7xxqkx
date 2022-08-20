@@ -9,9 +9,23 @@ import React, { useState, useRef } from 'react';
 
 function App() {
 
- /**
-  * code here
-  */
+ const emailRef = useRef();
+ 
+ const [error , setError] = useState("");
+ 
+ const validate=(event)=>{
+  
+   var regEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+  
+  if(!emailRef.current.value.match(regEx))[
+    setError("Email is invalid");
+   }
+ else{
+  setError("");
+ }
+  
+  
+ }
 
   return(
     <div className="App">

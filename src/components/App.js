@@ -20,6 +20,7 @@ function App() {
    return;
   }
   else{
+    setError("");
     console.log("email");
   }
   console.log(emailRef.current.value);

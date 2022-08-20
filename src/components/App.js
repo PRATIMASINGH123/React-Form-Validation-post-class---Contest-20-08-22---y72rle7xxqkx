@@ -8,50 +8,30 @@ import React, { useState, useRef } from 'react';
  */
 
 function App() {
+  const emailRef = useRef(null);
+  const [error , setError] = useState("");
 
- const emailRef = useRef();
  
- const [error , setError] = useState("");
- 
- const validate=(event)=>{
-  
-   var regEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
-  
-  if(!emailRef.current.value.match(regEx))[
-    setError("Email is invalid");
-   }
- else{
-  setError("");
+ const validate = (event) =>{
+  event.preventDefault();
+  var regEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+  if(!emailRef.current.value.match(regEx)){
+   setError("Email is invalid");
+   return;
+  }
+  else{
+    console.log("email");
+  }
+  console.log(emailRef.current.value);
  }
-  
-  
- }
-
   return(
     <div className="App">
-      <h1>How About Them Apples</h1>
-      <form>
-        <fieldset>
-          <label>
-            <p>First Name</p>
-            <input id='fname' name="name"  ref={fnameRef}/>
-            <br></br>
-            <p>Email</p>
-            <input id='lname' name="name"   ref={emailRef}/>
-            {error && <h2 style={{color: 'red'}}>{error}</h2>}
-          </label>
-        </fieldset>
-
-        <button id='submit' type="submit">Submit</button>
-      </form>
-      {
-        data.fname != undefined && (
-          <div>
-          <h1>{data.fname}</h1>
-          <h2>{data.lname}</h2>
-          </div>
-        )
-      }
+     hey
+     <form onSubmit={validate}>
+     <input type="text" ref={emailRef}/>
+     {error && <h2 style={{color: 'red'}}>{error}</h2>}
+     <button type='submit'>submit</button>
+     </form>
     </div>
   )
 }

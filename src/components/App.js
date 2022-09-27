@@ -1,38 +1,64 @@
 
 import React, { useState, useRef } from 'react';
-/**
- * @task :add validation to email, if email is not valid, if not valid email, dont allow to submit
- * @error_message :  "Email is invalid"  if email is wrong. (must be same message) 
- * 
- * 
- */
+
 
 function App() {
-  const emailRef = useRef(null);
-  const [error , setError] = useState("");
 
+  const fnameRef = useRef()
+  const emailRef = useRef("");
+  const [error , setError] =useState("");
+  const [submitBtn , setSubmitBtn] = useState(true);
+  const [data,setData]=useState({});
  
- const validate = (event) =>{
-  event.preventDefault();
-  var regEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
-  if(!emailRef.current.value.match(regEx)){
-   setError("Email is invalid");
-   return;
+
+  const HandleSubmit = (event) =>{
+    event.preventDefault();
+
+    setData({
+      fname:fnameRef.current.value,
+      lname:emailRef.current.value,
+    })
   }
-  else{
-    setError("");
-    console.log("email");
+
+  const HandleChange = (event) => {
+    const search = emailRef.current.value;
+    const re = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+    if (!re.test(search)){
+      setError("Email is invalid")
+      setSubmitBtn(true)
+    }
+    
+    if (re.test(search)){
+      setSubmitBtn(false)
+      setError("")
+    }
   }
-  console.log(emailRef.current.value);
- }
+
   return(
     <div className="App">
-     hey
-     <form onSubmit={validate}>
-     <input type="text" ref={emailRef}/>
-     {error && <h2 style={{color: 'red'}}>{error}</h2>}
-     <button type='submit'>submit</button>
-     </form>
+      <h1>How About Them Apples</h1>
+      <form>
+        <fieldset>
+          <label>
+            <p>First Name</p>
+            <input id='fname' name="name"  ref={fnameRef}/>
+            <br></br>
+            <p>Email</p>
+            <input id='lname' name="name" onChange={HandleChange}  ref={emailRef}/>
+            {error && <h2 style={{color: 'red'}}>{error}</h2>}
+          </label>
+        </fieldset>
+
+        <button id='submit' type="submit" onClick={HandleSubmit} disabled={submitBtn}>Submit</button>
+      </form>
+      {
+        data.fname != undefined && (
+          <div>
+          <h1>{data.fname}</h1>
+          <h2>{data.lname}</h2>
+          </div>
+        )
+      }
     </div>
   )
 }
